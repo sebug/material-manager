@@ -1,11 +1,13 @@
-﻿namespace material_manager;
+﻿using material_manager.ViewModels;
+
+namespace material_manager;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
 
-	public MainPage()
+	public MainPage(MainViewModel vm)
 	{
+		BindingContext = vm;
 		InitializeComponent();
 	}
 }
