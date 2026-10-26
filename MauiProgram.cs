@@ -36,4 +36,10 @@ public static class MauiProgram
 		mauiAppBuilder.Services.AddSingleton<MainViewModel>();
 		return mauiAppBuilder;
 	}
+
+	private static MauiAppBuilder AddRepositories(this MauiAppBuilder mauiAppBuilder)
+	{
+		mauiAppBuilder.Services.AddSingleton<IMaterialDatabase, MaterialDatabase>();
+		return mauiAppBuilder;
+	}
 }
