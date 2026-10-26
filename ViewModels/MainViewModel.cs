@@ -21,6 +21,36 @@ public class MainViewModel : ViewModelBase
             async () => await PerformOpenExcelCommand()));
     }
 
+    public async Task Init()
+    {
+        try
+        {
+            bool hasArticles = await ArticleRepository.HasAny();
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                HasArticles = hasArticles;
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+            await Shell.Current.DisplayAlertAsync("Erreur de chargement", "Erreur de chargement - " + ex.Message, "OK");
+        }
+    }
+
+    public bool HasArticles
+    {
+        get;
+        set
+        {
+            if (field != value)
+            {
+                field = value;
+                OnPropertyChanged(nameof(HasArticles));
+            }
+        }
+    }
+
     private async Task PerformOpenExcelCommand()
     {
         try
@@ -40,7 +70,7 @@ public class MainViewModel : ViewModelBase
                 PickerTitle = "Importer fichier d'articles",
                 FileTypes = customFileType
             };
-            var result = await FilePicker.Default.PickAsync(options);
+            var result = await MainThread.InvokeOnMainThreadAsync(async () => await FilePicker.Default.PickAsync(options));
             if (result != null)
             {
                 if (!result.FileName.EndsWith(".xlsx"))
@@ -65,7 +95,8 @@ public class MainViewModel : ViewModelBase
                                 ArticleReference = line.ArticleReference,
                                 SupplierReference = line.SupplierReference,
                                 SerialNumber = line.SerialNumber,
-                                NextControl = line.NextControl,
+                                NextControl = line.NextControl.HasValue ?
+                                    line.NextControl.Value.ToString("yyyy-MM-dd") : null,
                                 Label = line.Label,
                                 Mnemonic = line.Mnemonic,
                                 EAN13 = line.EAN13

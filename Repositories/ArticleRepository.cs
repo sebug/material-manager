@@ -24,4 +24,9 @@ public class ArticleRepository : IArticleRepository
     {
         return Database.GetByEAN(ean);
     }
+
+    public Task<bool> HasAny()
+    {
+        return Database.HasArticles();
+    }
 }

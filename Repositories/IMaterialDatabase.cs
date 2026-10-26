@@ -7,4 +7,5 @@ public interface IMaterialDatabase
     Task EnsureArticle(Article article);
     Task<List<Article>> GetAllArticles();
     Task<Article?> GetByEAN(string ean);
+    Task<bool> HasArticles();
 }

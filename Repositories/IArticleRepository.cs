@@ -7,4 +7,5 @@ public interface IArticleRepository
     Task Ensure(Article article);
     Task<List<Article>> GetAll();
     Task<Article?> GetByEAN(string ean);
+    Task<bool> HasAny();
 }

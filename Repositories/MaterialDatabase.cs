@@ -62,4 +62,10 @@ public async Task EnsureArticle(Article article)
         await Init();
         return await Database!.Table<Article>().FirstOrDefaultAsync(a => a.EAN13 == ean);
     }
+
+    public async Task<bool> HasArticles()
+    {
+        await Init();
+        return (await Database!.Table<Article>().CountAsync() > 0);
+    }
 }

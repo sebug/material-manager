@@ -16,5 +16,5 @@ public class Article
     public string EAN13 { get; set; } = String.Empty;
     public string? SerialNumber { get; set; }
     public int Amount { get; set; }
-    public DateOnly? NextControl { get; set; }
+    public string? NextControl { get; set; }
 }
