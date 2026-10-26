@@ -1,4 +1,5 @@
-﻿using material_manager.ViewModels;
+﻿using material_manager.Services;
+using material_manager.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace material_manager;
@@ -16,7 +17,9 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			})
 			.AddPages()
-			.AddViewModels();
+			.AddViewModels()
+			.AddRepositories()
+			.AddServices();
 
 #if DEBUG
 		builder.Logging.AddDebug();
@@ -40,6 +43,13 @@ public static class MauiProgram
 	private static MauiAppBuilder AddRepositories(this MauiAppBuilder mauiAppBuilder)
 	{
 		mauiAppBuilder.Services.AddSingleton<IMaterialDatabase, MaterialDatabase>();
+		mauiAppBuilder.Services.AddSingleton<IArticleRepository, ArticleRepository>();
+		return mauiAppBuilder;
+	}
+
+	private static MauiAppBuilder AddServices(this MauiAppBuilder mauiAppBuilder)
+	{
+		mauiAppBuilder.Services.AddSingleton<IArticlesListReader, ArticlesListReader>();
 		return mauiAppBuilder;
 	}
 }

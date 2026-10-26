@@ -4,6 +4,7 @@ namespace material_manager;
 
 public interface IArticleRepository
 {
-    Task EnsureArticle(Article article);
-    Task<List<Article>> GetAllArticles();
+    Task Ensure(Article article);
+    Task<List<Article>> GetAll();
+    Task<Article?> GetByEAN(string ean);
 }

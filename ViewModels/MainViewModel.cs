@@ -59,7 +59,7 @@ public class MainViewModel : ViewModelBase
                         .ToList();
                         foreach (var line in linesWithEAN)
                         {
-                            await ArticleRepository.EnsureArticle(new Article
+                            await ArticleRepository.Ensure(new Article
                             {
                                 Amount = line.Amount,
                                 ArticleReference = line.ArticleReference,
@@ -71,7 +71,7 @@ public class MainViewModel : ViewModelBase
                                 EAN13 = line.EAN13
                             });
                         }
-                        var linesInRepository = await ArticleRepository.GetAllArticles();
+                        var linesInRepository = await ArticleRepository.GetAll();
                         await Shell.Current.DisplayAlertAsync("Notification", "Number of lines in repository: " + linesInRepository.Count, "OK");
                     }
                     catch (Exception ex)
